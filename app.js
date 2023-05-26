@@ -12,7 +12,7 @@ app.use(cors({ origin: ["http://localhost:3000"],credentials:true }));
 app.use(bodyparser.json({ limit: "150mb"}));
 app.use(bodyparser.urlencoded({ limit: "150mb", extended:true}))
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser()); 
 app.use(fileUpload({
     useTempFiles:true
 }))
