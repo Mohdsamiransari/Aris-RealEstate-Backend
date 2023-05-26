@@ -1,37 +1,32 @@
-const express = require("express");
-const app = express();
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const bodyparser = require('body-parser')
-const cloudinary = require('cloudinary').v2
-const fileUpload = require('express-fileupload')
+const app = require("./app");
+const connectDatabase = require("./config/database");
+const dotenv = require("dotenv");
 
-const errorMiddleware = require("./middleware/error");
+// Handle Uncaught Promise Rejection
+process.on("uncaughtRejection", (err) => {
+  console.log(`Error: ${err.stack}`);
+  console.log("Shutting downt the server due to uncaught rejection");
 
-app.use(cors({ origin: ["http://localhost:3000"],credentials:true }));
-app.use(bodyparser.json({ limit: "150mb"}));
-app.use(bodyparser.urlencoded({ limit: "150mb", extended:true}))
-app.use(express.json());
-app.use(cookieParser()); 
-app.use(fileUpload({
-    useTempFiles:true
-}))
+  server.close(() => {
+    process.exit(1);
+  });
+});
 
+dotenv.config({ path: "config/config.env" });
+connectDatabase();
+const server = app.listen(process.env.PORT, () => {
+  console.log(
+    `Server is running at ${process.env.PORT} on ${process.env.NODE_ENV} mode.`
+  );
+});
 
-//setting  up cloudinary configuration
-cloudinary.config({
-    cloud_name : process.env.CLOUDINARY_CLOUD_NAME,
-    api_key : process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-})
+// Handle unhandled promise rejection
 
-const property = require("./route/propertyRoute");
-const User = require("./route/userRoute");
-app.use(property);
+process.on("unhandledRejection", (err) => {
+  console.log(`Error: ${err.message}`);
+  console.log("Shutting down the server");
 
-
-app.use(User);
-app.use(errorMiddleware);   
-
-
-module.exports = app;
+  server.close(() => {
+    process.exit(1);
+  });
+});
