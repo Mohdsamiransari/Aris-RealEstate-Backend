@@ -12,7 +12,7 @@ process.on("uncaughtRejection", (err) => {
   });
 });
 
-dotenv.config({ path: "Backend/config/config.env" });
+dotenv.config({ path: "config/config.env" });
 connectDatabase();
 const server = app.listen(process.env.PORT, () => {
   console.log(
