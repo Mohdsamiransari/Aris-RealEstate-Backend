@@ -3,6 +3,6 @@
     "name":"aris-real-estate-backend",
     
     "routes":[
-        {"src":"./server","dest": "server.js"}
+        {"src":"/server","dest": "server.js"}
     ]
 }
