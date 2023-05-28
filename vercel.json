@@ -1,10 +1,8 @@
 {
     "version":2,
     "name":"aris-real-estate-backend",
-    "builds":[
-        {"src": "./app.js", "use": "@vercel/node"}
-    ],
+    
     "routes":[
-        {"src":"/(.*)","dest": "server.js"}
+        {"src":"/(.*)","dest": "app.js"}
     ]
 }
