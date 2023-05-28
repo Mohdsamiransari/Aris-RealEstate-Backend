@@ -19,7 +19,7 @@ router.route("/resetPassword/:token").post(resetPassword);
 
 router.route("/Userlogout").get(UserLogout);
 
-router.route("/userProfile").post(isAuthenticatedUser, getUserProfile);
+router.route("/userProfile").get(isAuthenticatedUser, getUserProfile);
 router.route("/update/userProfile").put(isAuthenticatedUser, updateUserProfile);
 
 router.route("/updatePassword").put(isAuthenticatedUser, updatePassword);
